@@ -19,32 +19,30 @@ public class UserDatabase
                     // ERROR: One of the input strings are empty.
                     // Controller catches this, redirects to an error jsp.
                     throw new NullValueException("Input fields must not be empty.");
-                try
+                try (PreparedStatement psAcc = con.prepareStatement("SELECT * FROM USERS WHERE Email = ?"))
                 {
                     // Verify W/ Server
-                    String VER_QUERY = "SELECT * FROM USERS "
-                            + "WHERE Email = ?";
-                    PreparedStatement psAcc = con.prepareStatement(VER_QUERY);
                     psAcc.setString(1, uname);
-                    ResultSet rsAcc = psAcc.executeQuery();
-                    if (rsAcc.next())
-                    { // next() method returns false if no corresp. entry is found.
-                        if (rsAcc.getString("Password").equals(pword))
-                        {
-                            Account acc = new Account(uname, pword, rsAcc.getString("UserRole"));
-                            rsAcc.close();
-                            psAcc.close();
-                            return acc;
+                    try (ResultSet rsAcc = psAcc.executeQuery()) {
+                        if (rsAcc.next())
+                        { // next() method returns false if no corresp. entry is found.
+                            if (rsAcc.getString("Password").equals(pword))
+                            {
+                                Account acc = new Account(uname, pword, rsAcc.getString("UserRole"));
+                                rsAcc.close();
+                                psAcc.close();
+                                return acc;
+                            }
                         }
                     }
                     // ERROR: Credentials do not match.
                     // Controller catches this, redirects to an error jsp.
-                    throw new AuthenticationException("Error");
+                    throw new AuthenticationException("Username or password does not match.");
                 } catch (SQLException sqle)
                 {
                     // ERROR: There was a problem with the server.
                     // Controller catches this, redirects to an error jsp.
-                    throw new ServerAuthenticationException("");
+                    throw new ServerAuthenticationException("There was a problem during the login. Please try again.");
                 }
             }
 }
