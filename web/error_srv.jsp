@@ -1,3 +1,10 @@
+<%-- 
+    Document   : error_server
+    Created on : 02 23, 24, 12:07:16 PM
+    Author     : Dayao, Leonne Matthew H. // UST - 1CSC
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -196,8 +203,8 @@
     <div class="container">
         <div class="form">
             <div class="ERROR">
-                <p>404</p>
-                <h2>Page not found.</h2>
+                <p>Server Down</p>
+                <h2>The server is down. Please contact the administrator.</h2>
             </div>
             <a href="web">
                 <input class="btn" type="submit" id="submit" value="Return">
