@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.lang.ClassNotFoundException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,17 +78,25 @@ public class LoginServlet extends HttpServlet
     {
         response.setContentType("text/html;charset=UTF-8");
         if (isServerWorking) {
-            String uname = request.getParameter("uname");
-            String pword = request.getParameter("pword");
+            String uname, pword;
+            try {
+                uname = request.getParameter("uname");
+                pword = request.getParameter("pword");
+            }
+            catch (NullPointerException npe) {
+                uname = "";
+                pword = "";
+            }
             
             try {
                 LoginRequest lr = new LoginRequest();
                 Account acc = lr.loginRequest(con, uname, pword);
                 HttpSession session = request.getSession();
-                session.setAttribute("uname", acc.getUname());
+                session.setAttribute("uname", uname);
                 session.setAttribute("urole", acc.getUrole());
-                RequestDispatcher rs = request.getRequestDispatcher("/success");
-                rs.forward(request, response);
+                //RequestDispatcher rs = request.getRequestDispatcher("/success");
+                //rs.forward(request, response);
+                response.sendRedirect("success");
             }
             catch (AuthenticationException ae)  {
                 ae.printStackTrace();
@@ -142,9 +149,7 @@ public class LoginServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        //processRequest(request, response);
-        response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect("LoginTest.html");
+        processRequest(request, response);
     }
 
     /**

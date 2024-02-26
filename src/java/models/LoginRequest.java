@@ -15,25 +15,6 @@ public class LoginRequest
 {
     public Account loginRequest(Connection con, String uname, String pword) throws NullValueException, AuthenticationException, ServerAuthenticationException
                 {   
-                    /*
-                        TODO figure out efficient logic
-                    
-                        if
-                        username blank -> throw NullValueError
-                            (even when password is present; in this version, we will include it)
-                        
-                        if
-                        username correct, password correct -> RETURN ACCOUNT
-                        username correct, password blank -> error_5.jsp [CUSTOM] - "you haven't put anything in the password"
-                        username correct, password incorrect  -> error_2.jsp - "if the username is correct but incorrect password"
-                    
-                        else
-                        username incorrect, password blank -> error_1.jsp - "if the username is not in the DB, and password is blank"
-                        username incorrect, password correct/incorrect -> error_3.jsp - "if the username and password are both incorrect, both are not blank"
-                                (even when password is correct, for security purposes)
-                    
-                        Where do we fit AuthenticationException?
-                    */
                     if (uname == null || uname.isEmpty()) {
                         // ERROR: both username and password is left blank, or username is blank while password is
                         // Controller catches NullValueException, redirects to noLoginCredentials.jsp

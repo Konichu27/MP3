@@ -2,23 +2,13 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Dayao, Leonne Matthew H. // UST - 1CSC
- */
-@WebServlet(name = "WelcomeServlet", urlPatterns =
-{
-    "success"
-})
-public class WelcomeServlet extends HttpServlet
+public class LogoutServlet extends HttpServlet
 {
 
     /**
@@ -33,23 +23,11 @@ public class WelcomeServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        HttpSession session = request.getSession(); 
-        String uname, urole;
-        try {
-            uname = session.getAttribute("uname").toString();
-            urole = session.getAttribute("urole").toString();
-        }
-        catch (NullPointerException npe) {
-            uname = "";
-            urole = "";
-        }
-        if (!uname.isEmpty() && !urole.isEmpty()) {
-            RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/success.jsp");
-            rs.forward(request, response);
-        }
-        else {
-            response.sendRedirect("error_session.jsp");
-        }
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+        System.out.println(response.getStatus());
+        response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

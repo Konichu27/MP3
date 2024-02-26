@@ -1,13 +1,5 @@
-<%-- 
-    Document   : error_server
-    Created on : 02 23, 24, 12:07:16 PM
-    Author     : Dayao, Leonne Matthew H. // UST - 1CSC
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -192,7 +184,7 @@
         }
     </style>
 
-    <title>Server Down</title>
+    <title>Login Failure</title>
 </head>
 
 <body style="display:flex; align-items:center; justify-content:center;">
@@ -202,13 +194,13 @@
     <!--<img src="ERRobot.png" alt="Sad Robot 3d" class="robot">-->
     <div class="container">
         <div class="form">
-            <form action="index.jsp" method="POST">
-                <div class="ERROR">
-                    <p>Server Down</p>
-                    <h2>The server is down. Please contact the administrator.</h2>
-                </div>
+            <div class="ERROR">
+                <p>Login Failure</p>
+                <h2>Username & password are blank.</h2>
+            </div>
+            <a href="index.jsp">
                 <input class="btn" type="submit" id="submit" value="Return">
-            </form>
+            </a>
         </div>
     </div>
     <br>

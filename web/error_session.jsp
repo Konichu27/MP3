@@ -1,3 +1,10 @@
+<%-- 
+    Document   : error_session
+    Created on : 02 26, 24, 10:04:24 PM
+    Author     : Dayao, Leonne Matthew H. // UST - 1CSC
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -185,7 +192,7 @@
         }
     </style>
 
-    <title>MaxTryError</title>
+    <title>Session Failure</title>
 </head>
 
 <body style="display:flex; align-items:center; justify-content:center;">
@@ -195,13 +202,13 @@
     <!--<img src="ERRobot.png" alt="Sad Robot 3d" class="robot">-->
     <div class="container">
         <div class="form">
-            <div class="ERROR">
-                <p>404</p>
-                <h2>Page not found.</h2>
-            </div>
-            <a href="web">
+            <form action="index.jsp" method="POST">
+                <div class="ERROR">
+                    <p>Session Failure</p>
+                    <h2>You must be logged in to access this page.</h2>
+                </div>
                 <input class="btn" type="submit" id="submit" value="Return">
-            </a>
+            </form>
         </div>
     </div>
     <br>
@@ -209,5 +216,4 @@
         <p>(footer here)</p>
     </footer>
 </body>
-
 </html>

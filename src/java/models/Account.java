@@ -25,4 +25,8 @@ public class Account {
     public void setUrole(String urole) {
         this.urole = urole;
     }
+    @Override
+    public String toString() {
+        return urole + " " + uname;
+    }
 }

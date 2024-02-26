@@ -1,6 +1,6 @@
 <%-- 
-    Document   : error_server
-    Created on : 02 23, 24, 12:07:16 PM
+    Document   : error_con
+    Created on : 02 26, 24, 9:07:19 PM
     Author     : Dayao, Leonne Matthew H. // UST - 1CSC
 --%>
 
@@ -192,7 +192,7 @@
         }
     </style>
 
-    <title>Server Down</title>
+    <title>Login Failure</title>
 </head>
 
 <body style="display:flex; align-items:center; justify-content:center;">
@@ -204,8 +204,8 @@
         <div class="form">
             <form action="index.jsp" method="POST">
                 <div class="ERROR">
-                    <p>Server Down</p>
-                    <h2>The server is down. Please contact the administrator.</h2>
+                    <p>Login Failure</p>
+                    <h2>There was a problem with the server. Please try again, or contact the administrator if the problem persists.</h2>
                 </div>
                 <input class="btn" type="submit" id="submit" value="Return">
             </form>
@@ -216,5 +216,4 @@
         <p>(footer here)</p>
     </footer>
 </body>
-
 </html>
