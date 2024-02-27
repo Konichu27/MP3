@@ -1,3 +1,5 @@
+
+
 DB will have 3 columns (UserDB, table name: USER_INFO)
  - username
  - password
@@ -42,9 +44,9 @@ Login Servlet
 Must Have's:
  ServletConfig in your DD where you keep the following:
   - DB username, DB password, DB driver and URL
- ServletContext in your DD where you keep the value for the header and footer
- Session Timeout value set to 5 minutes
- welcome file set to index.jsp
+  - ServletContext in your DD where you keep the value for the header and footer
+  - Session Timeout value set to 5 minutes
+  - welcome file set to index.jsp
 
 Additional Pages:
  - Error page declarations. Give at least 5.
