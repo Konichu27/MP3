@@ -198,7 +198,7 @@
                 <p>404</p>
                 <h2>Page not found.</h2>
             </div>
-            <a href="index.jsp">
+            <a href="/ICS2609_2CSC_DAYAO_ESGUERRA_GULIFARDO/index.jsp">
                 <input class="btn" type="submit" id="submit" value="Return">
             </a>
         </div>
