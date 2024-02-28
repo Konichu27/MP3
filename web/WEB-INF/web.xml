@@ -7,6 +7,22 @@
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controllers.LoginServlet</servlet-class>
+        <init-param>
+            <param-name>username</param-name>
+            <param-value>app</param-value>
+	</init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>app</param-value>
+	</init-param>
+        <init-param>
+            <param-name>driver</param-name>
+            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+	</init-param>
+        <init-param>
+            <param-name>url</param-name>
+            <param-value>jdbc:derby://localhost:1527/LoginDB</param-value>
+	</init-param>
     </servlet>
     <servlet>
         <servlet-name>WelcomeServlet</servlet-name>

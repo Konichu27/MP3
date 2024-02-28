@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.lang.ClassNotFoundException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,13 +39,13 @@ public class LoginServlet extends HttpServlet
     public void init(ServletConfig config) throws ServletException {
         // Load Driver
         try {
-            String driver = "org.apache.derby.jdbc.ClientDriver";
+            String driver = config.getInitParameter("driver");
             Class.forName(driver);
             System.out.println("Loaded Driver: " + driver);
             // Establish Connection
-            String url = "jdbc:derby://localhost:1527/LoginDB"; // change to UserDB once ready
-            String username = "app";
-            String password = "app";
+            String url = config.getInitParameter("url"); // change to UserDB once ready
+            String username = config.getInitParameter("username");
+            String password = config.getInitParameter("password");
             this.con = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to: " + url);
             isServerWorking = true;
