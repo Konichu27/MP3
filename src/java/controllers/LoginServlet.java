@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,6 +31,7 @@ public class LoginServlet extends HttpServlet
     
     private Connection con;
     private boolean isServerWorking;
+    private String driver, url, username, password;
     
     /**
      *
@@ -39,13 +42,13 @@ public class LoginServlet extends HttpServlet
     public void init(ServletConfig config) throws ServletException {
         // Load Driver
         try {
-            String driver = config.getInitParameter("driver");
+            driver = config.getInitParameter("driver");
             Class.forName(driver);
             System.out.println("Loaded Driver: " + driver);
             // Establish Connection
-            String url = config.getInitParameter("url"); // change to UserDB once ready
-            String username = config.getInitParameter("username");
-            String password = config.getInitParameter("password");
+            url = config.getInitParameter("url"); // change to UserDB once ready
+            username = config.getInitParameter("username");
+            password = config.getInitParameter("password");
             this.con = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to: " + url);
             isServerWorking = true;
@@ -76,6 +79,7 @@ public class LoginServlet extends HttpServlet
             throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println(System.getProperty("com.sun.aas.instanceRoot"));
         if (isServerWorking) {
             String uname, pword;
             try {

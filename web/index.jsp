@@ -14,9 +14,6 @@
         <link rel="stylesheet"  type="text/css" href="styles.css">
         <style>
            @import url(https://fonts.googleapis.com/css?family=Poppins:300);
-          html {
-            height: 100%;
-          }
 
           body {
             margin: 0;
@@ -182,7 +179,7 @@
           
         <title>Login Page</title>
     </head>
-    <%  // Removes cache from main.jsp to prevent form resubmission
+    <%  // Removes cache from index.jsp to prevent form resubmission
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma","no-cache"); 
     response.setHeader("Expires","0");
@@ -205,24 +202,19 @@
         }
     %>
     <body style="display:flex; align-items:center; justify-content:center;">
-        <header class="header">
-            <p>(insert header here)</p>    
-        </header>
-        
+        <jsp:include page="/WEB-INF/header.jsp"/> 
         <div class="login-page">
             <div class="form">
             <form action="login" method="POST">
             <h2>Login Page</h2>
-                <input id="uname" name="uname" type="text" placeholder="Username" required autocomplete="off">
-                <input id="pword" name="pword" type="password" placeholder="Password" required autocomplete="off">
+                <input id="uname" name="uname" type="text" placeholder="Username" autocomplete="off">
+                <input id="pword" name="pword" type="password" placeholder="Password" autocomplete="off">
                 
                 <input class="btn" type="submit" id="submit" value="Submit">
             </form>
           </div>
         </div>
         <br>
-        <footer class="footer">
-            <p>(footer here)</p>
-        </footer>
+        <jsp:include page="/WEB-INF/footer.jsp"/> 
     </body>
 </html>

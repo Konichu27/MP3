@@ -21,9 +21,9 @@ public class LoginRequest
                         throw new NullValueException("6: User " + uname + " requested with a blank password.");
                     }
                     
-                    boolean isPwordBlank = (uname == null || uname.isEmpty());
+                    boolean isPwordBlank = (pword == null || pword.isEmpty());
                     
-                    try (PreparedStatement psAcc = con.prepareStatement("SELECT * FROM USERS WHERE Email = ?"))
+                    try (PreparedStatement psAcc = con.prepareStatement("SELECT * FROM USER_INFO WHERE username = ?"))
                     {
                         // Verify W/ Server
                         // DO NOT REMOVE THE NUMBERS. They are needed
@@ -31,8 +31,8 @@ public class LoginRequest
                         try (ResultSet rsAcc = psAcc.executeQuery()) {
                             if (rsAcc.next()) // USERNAME CORRECT
                             { // next() method returns false if no corresp. entry is found.
-                                if (rsAcc.getString("Password").equals(pword)) { // PASSWORD CORRECT
-                                    return new Account(uname, pword, rsAcc.getString("UserRole"));
+                                if (rsAcc.getString("password").equals(pword)) { // PASSWORD CORRECT
+                                    return new Account(uname, pword, rsAcc.getString("role"));
                                 }
                                 else if (isPwordBlank) {
                                     // ERROR 2: the username is correct but incorrect password

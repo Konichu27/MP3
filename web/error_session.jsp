@@ -16,10 +16,6 @@
     <style>
         @import url(https://fonts.googleapis.com/css?family=Poppins:300);
 
-        html {
-            height: 100%;
-        }
-
         body {
             margin: 0;
             padding: 0;
@@ -196,9 +192,7 @@
 </head>
 
 <body style="display:flex; align-items:center; justify-content:center;">
-    <header class="header">
-        <p>(insert header here)</p>
-    </header>
+    <jsp:include page="/WEB-INF/header.jsp"/> 
     <!--<img src="ERRobot.png" alt="Sad Robot 3d" class="robot">-->
     <div class="container">
         <div class="form">
@@ -212,8 +206,6 @@
         </div>
     </div>
     <br>
-    <footer class="footer">
-        <p>(footer here)</p>
-    </footer>
+    <jsp:include page="/WEB-INF/footer.jsp"/> 
 </body>
 </html>
