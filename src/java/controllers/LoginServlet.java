@@ -105,6 +105,7 @@ public class LoginServlet extends HttpServlet
                 ae.printStackTrace();
                 switch (ae.getMessage().charAt(0)) {
                     case '1':
+                        
                         response.sendRedirect("error_1.jsp");
                         break;
                     case '2':

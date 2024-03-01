@@ -196,10 +196,7 @@
         uname = "";
         urole = "";
     }
-    if (!uname.isEmpty() && !urole.isEmpty()) { 
-        response.sendRedirect("success");
-        out.println(urole + " " + uname + " accessed index.jsp while logged in; redirected to success.jsp"); 
-        }
+    session.invalidate();
     %>
     <body style="display:flex; align-items:center; justify-content:center;">
         <jsp:include page="/WEB-INF/header.jsp"/> 
