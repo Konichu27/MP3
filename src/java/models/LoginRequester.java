@@ -3,6 +3,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
 /**
  * @author Edrine Frances
@@ -11,9 +14,17 @@ import java.sql.SQLException;
  * 2CSC - CICS - University of Santo Tomas
  */
 
-public class LoginRequest
+public class LoginRequester
 {
-    public Account loginRequest(Connection con, String uname, String pword) throws NullValueException, AuthenticationException, ServerAuthenticationException
+    private static Connection con;
+    private static String key;
+    
+    public LoginRequester(Connection con, String key) {
+        LoginRequester.con = con;
+        LoginRequester.key = key;
+    }
+    
+    public Account loginRequest(String uname, String pword) throws NullValueException, AuthenticationException, ServerAuthenticationException
                 {   
                     if (uname == null || uname.isEmpty()) {
                         // ERROR: both username and password is left blank, or username is blank while password is
@@ -23,6 +34,10 @@ public class LoginRequest
                     
                     boolean isPwordBlank = (pword == null || pword.isEmpty());
                     
+                    String encrypPword;
+                    encrypPword = Security.encrypt(pword, key);
+                    encrypPword = Objects.toString(encrypPword, "");
+                    
                     try (PreparedStatement psAcc = con.prepareStatement("SELECT * FROM USER_INFO WHERE username = ?"))
                     {
                         // Verify W/ Server
@@ -31,8 +46,8 @@ public class LoginRequest
                         try (ResultSet rsAcc = psAcc.executeQuery()) {
                             if (rsAcc.next()) // USERNAME CORRECT
                             { // next() method returns false if no corresp. entry is found.
-                                if (rsAcc.getString("password").equals(pword)) { // PASSWORD CORRECT
-                                    return new Account(uname, pword, rsAcc.getString("role"));
+                                if (rsAcc.getString("password").equals(encrypPword)) { // PASSWORD CORRECT
+                                    return new Account(uname, encrypPword, rsAcc.getString("role"));
                                 }
                                 else if (isPwordBlank) {
                                     // ERROR 2: the username is correct but incorrect password

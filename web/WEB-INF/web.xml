@@ -12,6 +12,10 @@
         <param-name>Name</param-name>
         <param-value>Dayao, Esguerra, Gulifardo</param-value>
     </context-param>
+    <context-param>
+        <param-name>Cipher</param-name>
+        <param-value>AES/ECB/PKCS5Padding</param-value>
+    </context-param>
     <listener>
         <listener-class>
             controllers.DateContextListener
@@ -32,6 +36,10 @@
             <param-name>password</param-name>
             <param-value>app</param-value>
 	</init-param>
+        <init-param>
+            <param-name>key</param-name>
+            <param-value>2CSCMP3GR0UP10 ?</param-value>
+        </init-param>
         <init-param>
             <param-name>driver</param-name>
             <param-value>org.apache.derby.jdbc.ClientDriver</param-value>

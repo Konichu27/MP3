@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,9 +27,10 @@ import models.Account;
 public class LoginServlet extends HttpServlet
 {
     
-    private Connection con;
-    private boolean isServerWorking;
-    private String driver, url, username, password;
+    private static Connection con;
+    private static boolean isServerWorking;
+    private static String driver, url, username, password;
+    private static LoginRequester lr;
     
     /**
      *
@@ -51,6 +50,9 @@ public class LoginServlet extends HttpServlet
             password = config.getInitParameter("password");
             this.con = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to: " + url);
+            // LoginRequester object manages secure login requests.
+            // - Retrieves a key from the server config of the deployment descriptor
+            this.lr = new LoginRequester(con, config.getInitParameter("key"));
             isServerWorking = true;
         }
         catch (ClassNotFoundException | SQLException e) {
@@ -92,8 +94,7 @@ public class LoginServlet extends HttpServlet
             }
             
             try {
-                LoginRequest lr = new LoginRequest();
-                Account acc = lr.loginRequest(con, uname, pword);
+                Account acc = lr.loginRequest(uname, pword);
                 HttpSession session = request.getSession();
                 session.setAttribute("uname", uname);
                 session.setAttribute("urole", acc.getUrole());
