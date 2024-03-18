@@ -18,10 +18,12 @@ public class LoginRequester
 {
     private static Connection con;
     private static String key;
+    private static String cipher;
     
-    public LoginRequester(Connection con, String key) {
+    public LoginRequester(Connection con, String key, String cipher) {
         LoginRequester.con = con;
         LoginRequester.key = key;
+        LoginRequester.cipher = cipher;
     }
     
     public Account loginRequest(String uname, String pword) throws NullValueException, AuthenticationException, ServerAuthenticationException
@@ -35,7 +37,7 @@ public class LoginRequester
                     boolean isPwordBlank = (pword == null || pword.isEmpty());
                     
                     String encrypPword;
-                    encrypPword = Security.encrypt(pword, key);
+                    encrypPword = Security.encrypt(pword, key, cipher);
                     encrypPword = Objects.toString(encrypPword, "");
                     
                     try (PreparedStatement psAcc = con.prepareStatement("SELECT * FROM USER_INFO WHERE username = ?"))

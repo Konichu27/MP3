@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet
             System.out.println("Connected to: " + url);
             // LoginRequester object manages secure login requests.
             // - Retrieves a key from the server config of the deployment descriptor
-            this.lr = new LoginRequester(con, config.getInitParameter("key"));
+            this.lr = new LoginRequester(con, config.getInitParameter("key"), config.getInitParameter("cipher"));
             isServerWorking = true;
         }
         catch (ClassNotFoundException | SQLException e) {
