@@ -49,6 +49,16 @@
             <param-value>jdbc:derby://localhost:1527/UserDB</param-value>
 	</init-param>
     </servlet>
+    <!--
+    <servlet>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <servlet-class>controllers.CaptchaServlet</servlet-class>
+        <init-param>
+            <param-name>captchaLength</param-name>
+            <param-value>8</param-value>
+	</init-param>
+    </servlet>
+    -->
     <servlet>
         <servlet-name>WelcomeServlet</servlet-name>
         <servlet-class>controllers.WelcomeServlet</servlet-class>
