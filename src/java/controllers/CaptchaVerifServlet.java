@@ -1,7 +1,7 @@
 package controllers;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,11 +13,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dayao, Leonne Matthew H. // UST - 1CSC
  */
-@WebServlet(name = "WelcomeServlet", urlPatterns =
+@WebServlet(name = "CaptchaVerifServlet", urlPatterns =
 {
-    "success"
+    "/captchaVerif"
 })
-public class WelcomeServlet extends HttpServlet
+public class CaptchaVerifServlet extends HttpServlet
 {
 
     /**
@@ -32,25 +32,16 @@ public class WelcomeServlet extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
-        String uname, urole, isCaptchaValid;
         HttpSession session = request.getSession();
-        try {
-            uname = session.getAttribute("uname").toString();
-            urole = session.getAttribute("urole").toString();
-            isCaptchaValid = session.getAttribute("isCaptchaValid").toString();
-        }
-        catch (NullPointerException npe) {
-            uname = "";
-            urole = "";
-            isCaptchaValid = "";
-        }
-        if (!uname.isEmpty() && !urole.isEmpty() && isCaptchaValid.equals("true")) {
-            RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/success.jsp");
-            rs.forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        System.out.println(request.getParameter("captcha"));
+        System.out.println(request.getParameter("captchaVerif"));
+        if (session.getAttribute("captcha").equals(request.getParameter("captchaVerif"))) {
+            session.setAttribute("isCaptchaValid", true);
+            response.sendRedirect("success");
         }
         else {
-            response.sendRedirect("error_session.jsp");
+            response.sendRedirect("error_captcha.jsp");
         }
     }
 

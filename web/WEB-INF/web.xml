@@ -27,11 +27,11 @@
         <init-param>
             <param-name>username</param-name>
             <param-value>app</param-value>
-	</init-param>
+        </init-param>
         <init-param>
             <param-name>password</param-name>
             <param-value>app</param-value>
-	</init-param>
+        </init-param>
         <init-param>
             <param-name>key</param-name>
             <param-value>2CSCMP3GR0UP10 ?</param-value>
@@ -43,11 +43,11 @@
         <init-param>
             <param-name>driver</param-name>
             <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
-	</init-param>
+        </init-param>
         <init-param>
             <param-name>url</param-name>
             <param-value>jdbc:derby://localhost:1527/UserDB</param-value>
-	</init-param>
+        </init-param>
     </servlet>
     <!--
     <servlet>
@@ -63,6 +63,19 @@
         <servlet-name>WelcomeServlet</servlet-name>
         <servlet-class>controllers.WelcomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <servlet-class>controllers.CaptchaServlet</servlet-class>
+        <init-param>
+            <param-name>captchaLength</param-name>
+            <param-value>8</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>CaptchaVerifServlet</servlet-name>
+        <servlet-class>controllers.CaptchaVerifServlet</servlet-class>
+    </servlet>
+    <!-- Servlet Mapping-->
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
@@ -74,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/success</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <url-pattern>/captcha</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CaptchaVerifServlet</servlet-name>
+        <url-pattern>/captchaVerif</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

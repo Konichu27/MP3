@@ -202,13 +202,14 @@
         <jsp:include page="/WEB-INF/header.jsp"/> 
         <div class="login-page">
             <div class="form">
-                <form action="login" method="POST">
-                    <h2>Login Page</h2>
-                    <input id="uname" name="uname" type="text" placeholder="Username" autocomplete="off">
-                    <input id="pword" name="pword" type="password" placeholder="Password" autocomplete="off">
-                    <input class="btn" type="submit" id="submit" value="Submit">
-                </form>
-            </div>
+            <form action="login" method="POST">
+            <h2>Login Page</h2>
+                <input id="uname" name="uname" type="text" placeholder="Username" autocomplete="off">
+                <input id="pword" name="pword" type="password" placeholder="Password" autocomplete="off">
+                
+                <input class="btn" type="submit" id="submit" value="Submit">
+            </form>
+          </div>
         </div>
         <br>
         <jsp:include page="/WEB-INF/footer.jsp"/> 

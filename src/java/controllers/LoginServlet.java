@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -81,57 +82,67 @@ public class LoginServlet extends HttpServlet
             throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println(System.getProperty("com.sun.aas.instanceRoot"));
         if (isServerWorking) {
-            String uname, pword;
+            String uname, pword, isCaptchaValid;
             try {
                 uname = request.getParameter("uname");
                 pword = request.getParameter("pword");
+                isCaptchaValid = request.getParameter("isCaptchaValid");
             }
-            catch (NullPointerException npe) {
+            catch (NullPointerException npe) { // catches null errors
                 uname = "";
                 pword = "";
+                isCaptchaValid = "";
             }
             
-            try {
-                Account acc = lr.loginRequest(uname, pword);
-                HttpSession session = request.getSession();
-                session.setAttribute("uname", uname);
-                session.setAttribute("urole", acc.getUrole());
-                //RequestDispatcher rs = request.getRequestDispatcher("/success");
-                //rs.forward(request, response);
-                response.sendRedirect("success");
-            }
-            catch (AuthenticationException ae)  {
-                ae.printStackTrace();
-                switch (ae.getMessage().charAt(0)) {
-                    case '1':
-                        
-                        response.sendRedirect("error_1.jsp");
-                        break;
-                    case '2':
-                        response.sendRedirect("error_2.jsp");
-                        break;
-                    case '3':
-                        response.sendRedirect("error_3.jsp");
-                        break;
-                    // Error 4 reserved for 404s; already handled by web.xml
-                    case '5':
-                        response.sendRedirect("error_5.jsp");
-                        break;
-                    default:
-                        response.sendRedirect("error_gen.jsp");
-                        break;
+            // login.jsp checks if the typed CAPTCHA is valid, and passes a boolean value.
+            // Parameter is retrieved in the form of a string, then checks if the first character is 't' (true). Else it returns a specific error page.
+            // If you need to check the validation code, also consider login.jsp & CaptchaServlet.
+
+            // TODO: REMOVE COMMENT ONCE PAGES (login.jsp w/ CAPTCHA validation, error_captcha.jsp) ARE CREATED
+            // if (isCaptchaValid.charAt(0) == 't')
+                try {
+                    Account acc = lr.loginRequest(uname, pword);
+                    HttpSession session = request.getSession();
+                    // request.setAttribute("uname", uname);
+                    // request.setAttribute("urole", acc.getUrole());
+                    session.setAttribute("uname", uname);
+                    session.setAttribute("urole", acc.getUrole());
+                    response.sendRedirect("captcha");
                 }
-            }
-            catch (NullValueException nve) {
-                response.sendRedirect("noLoginCredentials.jsp");
-                nve.printStackTrace();
-            }
-            catch (ServerAuthenticationException sae) {
-                response.sendRedirect("error_con.jsp");
-                sae.printStackTrace();
-            }
+                catch (AuthenticationException ae)  {
+                    ae.printStackTrace();
+                    switch (ae.getMessage().charAt(0)) {
+                        case '1':
+                            response.sendRedirect("error_1.jsp");
+                            break;
+                        case '2':
+                            response.sendRedirect("error_2.jsp");
+                            break;
+                        case '3':
+                            response.sendRedirect("error_3.jsp");
+                            break;
+                        // Error 4 reserved for 404s; already handled by web.xml
+                        case '5':
+                            response.sendRedirect("error_5.jsp");
+                            break;
+                        default:
+                            response.sendRedirect("error_gen.jsp");
+                            break;
+                    }
+                }
+                catch (NullValueException nve) {
+                    response.sendRedirect("noLoginCredentials.jsp");
+                    nve.printStackTrace();
+                }
+                catch (ServerAuthenticationException sae) {
+                    response.sendRedirect("error_con.jsp");
+                    sae.printStackTrace();
+                }
+            // TODO: REMOVE COMMENT ONCE PAGES (login.jsp w/ CAPTCHA validation, error_captcha.jsp) ARE CREATED
+            /*else {
+                response.sendRedirect("error_captcha.jsp");
+            }*/
         }
         else {
             response.sendRedirect("error_srv.jsp");

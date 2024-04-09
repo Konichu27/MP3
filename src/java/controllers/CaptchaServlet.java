@@ -1,9 +1,11 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Random;
+import javax.servlet.ServletConfig;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +15,40 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dayao, Leonne Matthew H. // UST - 1CSC
  */
-@WebServlet(name = "WelcomeServlet", urlPatterns =
+public class CaptchaServlet extends HttpServlet
 {
-    "success"
-})
-public class WelcomeServlet extends HttpServlet
-{
+    private static int captchaLength;
+    
+    public void init(ServletConfig config) throws ServletException {
+        captchaLength = Integer.parseInt(config.getInitParameter("captchaLength"));
+    }
+    
+    static boolean checkCaptcha(String captcha, String user_captcha)
+    {
+            return captcha.equals(user_captcha);
+    }
 
-    /**
+    // Generates a CAPTCHA of given length
+    static String generateCaptcha(int n)
+    {
+            //to generate random integers in the range [0-61]
+            Random rand = new Random(62); 
+
+            // Characters to be included
+            String chrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+            // Generate n characters from above set and
+            // add these characters to captcha.
+            String captcha = "";
+            while (n-- > 0){
+                    int index = (int)(Math.random()*62);
+                    captcha+=chrs.charAt(index);
+            }
+
+            return captcha;
+    }
+    
+   /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -29,28 +57,28 @@ public class WelcomeServlet extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
-        String uname, urole, isCaptchaValid;
-        HttpSession session = request.getSession();
+        String uname, urole;
+        HttpSession session = request.getSession(); 
         try {
             uname = session.getAttribute("uname").toString();
             urole = session.getAttribute("urole").toString();
-            isCaptchaValid = session.getAttribute("isCaptchaValid").toString();
         }
         catch (NullPointerException npe) {
             uname = "";
             urole = "";
-            isCaptchaValid = "";
         }
-        if (!uname.isEmpty() && !urole.isEmpty() && isCaptchaValid.equals("true")) {
-            RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/success.jsp");
+        if (!uname.isEmpty() && !urole.isEmpty()) {
+            session.setAttribute("captcha", generateCaptcha(captchaLength));
+            RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/captcha.jsp");
             rs.forward(request, response);
         }
         else {
-            response.sendRedirect("error_session.jsp");
+            response.sendRedirect("error_403.jsp");
         }
     }
 
