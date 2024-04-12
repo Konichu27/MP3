@@ -38,6 +38,12 @@ public class LoginServlet extends HttpServlet
      * @param config
      * @throws ServletException
      */
+    
+    /*
+      SAMPLE PASSWORDS:
+    Admin: Hell0!!
+    Guest: Hell0@@
+    */
     @Override
     public void init(ServletConfig config) throws ServletException {
         // Load Driver
@@ -83,24 +89,20 @@ public class LoginServlet extends HttpServlet
     {
         response.setContentType("text/html;charset=UTF-8");
         if (isServerWorking) {
-            String uname, pword, isCaptchaValid;
+            String uname, pword;
             try {
                 uname = request.getParameter("uname");
                 pword = request.getParameter("pword");
-                isCaptchaValid = request.getParameter("isCaptchaValid");
             }
             catch (NullPointerException npe) { // catches null errors
                 uname = "";
                 pword = "";
-                isCaptchaValid = "";
             }
             
             // login.jsp checks if the typed CAPTCHA is valid, and passes a boolean value.
             // Parameter is retrieved in the form of a string, then checks if the first character is 't' (true). Else it returns a specific error page.
             // If you need to check the validation code, also consider login.jsp & CaptchaServlet.
 
-            // TODO: REMOVE COMMENT ONCE PAGES (login.jsp w/ CAPTCHA validation, error_captcha.jsp) ARE CREATED
-            // if (isCaptchaValid.charAt(0) == 't')
                 try {
                     Account acc = lr.loginRequest(uname, pword);
                     HttpSession session = request.getSession();

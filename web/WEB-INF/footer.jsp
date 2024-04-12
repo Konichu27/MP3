@@ -22,7 +22,7 @@
         <footer class="footer">
             <p>Date: <%= getServletContext().getAttribute("currentDate")%></p>
             <p>Time: <%= getServletContext().getAttribute("currentTime")%></p>
-            <p>Machine Problem II</p>
+            <p>Machine Problem III</p>
         </footer>
     </body>
 </html>

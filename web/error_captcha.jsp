@@ -61,9 +61,8 @@
         }
 
         h2 {
-            margin-top: 0;
-
-            margin-bottom: 50px;
+            margin-top: 20px;
+            margin-bottom: 30px;
             color: white;
             text-align: center;
             font-family: Poppins;
@@ -73,7 +72,7 @@
 
         .btn {
             width: 50%;
-            margin-top: 30px;
+            margin-top: 40px;
             margin-bottom: 10px;
             background: transparent;
             color: #fff;
@@ -189,7 +188,6 @@
     <div class="container">
         <div class="form">
             <div class="ERROR">
-                <p>Failure</p>
                 <h2>The inputted CAPTCHA was incorrect. Please try again.</h2>
             </div>
             <a href="captcha">

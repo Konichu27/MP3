@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Dayao, Leonne Matthew H. // UST - 1CSC
- */
 public class CaptchaServlet extends HttpServlet
 {
     private static int captchaLength;
@@ -78,7 +74,7 @@ public class CaptchaServlet extends HttpServlet
             rs.forward(request, response);
         }
         else {
-            response.sendRedirect("error_403.jsp");
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/"));
         }
     }
 
